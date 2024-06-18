@@ -36,13 +36,13 @@ bonus () {
 	if (( HERE_DOC_FLAG == 1 )); then
 		ARG_STR="${ARG_ARRAY[2]} << ${ARG_ARRAY[1]}"
 		for ((i=3; i<${#ARG_ARRAY[@]} - 1; i++));do
-			ARG_STR+=" | "${ARG_ARRAY[i]}""
+			ARG_STR+=" | "\\${ARG_ARRAY[i]}""
 		done
 		ARG_STR+=" >> ${OUTPUTFILE1}"
 	else
 		ARG_STR="< ${ARG_ARRAY[0]} ${ARG_ARRAY[1]}"
 		for (( i=2; i<${#ARG_ARRAY[@]} - 1; i++ ));do
-			ARG_STR+=" | "${ARG_ARRAY[i]}""
+			ARG_STR+=" | "\\${ARG_ARRAY[i]}""
 		done
 		ARG_STR+=" > ${OUTPUTFILE1}"
 	fi
@@ -112,13 +112,13 @@ test () {
 	if (( HERE_DOC_FLAG == 1 )); then
 		ARG_STR="${ARG_ARRAY[2]} << ${ARG_ARRAY[1]}"
 		for ((i=3; i<${#ARG_ARRAY[@]} - 1; i++));do
-			ARG_STR+=" | "${ARG_ARRAY[i]}""
+			ARG_STR+=" | "\\${ARG_ARRAY[i]}""
 		done
 		ARG_STR+=" >> ${OUTPUTFILE1}"
 	else
 		ARG_STR="< ${ARG_ARRAY[0]} ${ARG_ARRAY[1]}"
 		for (( i=2; i<${#ARG_ARRAY[@]} - 1; i++ ));do
-			ARG_STR+=" | "${ARG_ARRAY[i]}""
+			ARG_STR+=" | "\\${ARG_ARRAY[i]}""
 		done
 		ARG_STR+=" > ${OUTPUTFILE1}"
 	fi
@@ -168,7 +168,8 @@ ${HERE_DOC}" 2> /dev/null
 
 result_output() {
 	local temp_file=$(mktemp)
-	if diff -y "$OUTPUTFILE" "$OUTPUTFILE1" > ${temp_file}; then
+	# if diff -y "$OUTPUTFILE" "$OUTPUTFILE1" > ${temp_file}; then
+	if diff "$OUTPUTFILE" "$OUTPUTFILE1" > ${temp_file}; then
 		printf "${GREEN}%-8s${RESET}" "[OK]"
 	else
 		if (( ${ERROR_FLAG} == 0 )); then print_test_case >> last_err_log.txt; fi
