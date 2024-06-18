@@ -242,6 +242,9 @@ print_header "BONUS HERE_DOC ERROR CHECKING"
 bonus "here_doc" "EOF" "grep no" "cat -e" "" "cat -e" "sleep 1" "outfiles/outfile"
 bonus "here_doc" "EOF" "grep no" "cat -e" "grep $" "cat -e" "sleep 1" "outfiles/outfile"
 bonus "here_doc" "EOF" "grep Hello" "cat -e" "grep $" "cat -e" "sleep 1" "nocmd" "outfiles/outfile"
+HERE_DOC=$'Hello\nHello\nHello\nEOF'
+bonus "here_doc" "END" "cat -e" "cat -e" "outfiles/outfile"
+HERE_DOC=$'Hello\nHello\nHello\nEOF\n'
 bonus "here_doc" "END" "cat -e" "cat -e" "outfiles/outfile"
 bonus "here_doc" "END" "cat -e" "cat -e" "" "cat -e" "" "outfiles/outfile"
 bonus "here_doc" "EOF" "wc -l" "grep error" "cat -n" "" "sleep 1" "outfiles/outfile"
